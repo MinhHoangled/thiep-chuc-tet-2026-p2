@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#b91c1c">
+    
+    <!-- SEO & Open Graph (Hack trick cho link đẹp khi share Zalo/FB) -->
+    <title>Lời Chúc Xuân Bính Ngọ 2026</title>
+    <meta name="description" content="Nhận ngay tấm thiệp chúc Tết đặc biệt và những lời chúc may mắn nhất cho năm Bính Ngọ 2026!">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="🧧 Thiệp Chúc Tết Bính Ngọ 2026">
+    <meta property="og:description" content="Click để mở thiệp và nhận lì xì may mắn đầu năm!">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1548685913-fe6678b4277b?q=80&w=1200&auto=format&fit=crop">
+
+    <!-- Fonts: Thư pháp & Hiện đại -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600;800&family=Pangolin&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- RESET & BASE STYLES --- */
+        :root {
+            --primary-red: #b91c1c;
+            --gold: #fbbf24;
+            --deep-red: #7f1d1d;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --font-script: 'Dancing Script', cursive;
+            --font-body: 'Montserrat', sans-serif;
+            --font-cute: 'Pangolin', cursive;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            overflow: hidden; /* Chặn scroll để full screen app feel */
+            width: 100vw;
+            height: 100vh;
+            font-family: var(--font-body);
+            color: #fff;
+            /* Animated Gradient Background */
+            background: linear-gradient(-45deg, #7f1d1d, #b91c1c, #991b1b, #450a0a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- CANVAS LAYERS --- */
+        #fireworks-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Click through canvas */
+            z-index: 1;
+        }
+
+        /* --- OVERLAY (USER INTERACTION TRAP) --- */
+        #welcome-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .btn-start {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary-red);
+            background: var(--gold);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+            animation: pulse 1.5s infinite;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: var(--font-body);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(251, 191, 36, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
+        }
+
+        /* --- MAIN CARD (GLASSMORPHISM) --- */
+        #main-card {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 500px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            z-index: 10;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .show-card {
+            opacity: 1 !important;
+            transform: translate(-50%, -50%) scale(1) !important;
+        }
+
+        /* --- SVG HORSE MASCOT --- */
+        .mascot-container {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 15px;
+            filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.6));
+        }
+
+        /* SVG Styling */
+        .horse-svg {
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1 {
+            font-family: var(--font-script);
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .message-box {
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-cute);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #fff;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* --- COUNTDOWN --- */
+        #countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .time-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .time-val {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--gold);
+            font-family: monospace;
+        }
+
+        .time-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+        }
+
+        /* --- INPUT & SENDER --- */
+        .sender-info {
+            font-family: var(--font-script);
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-top: 10px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        input {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: #fff;
+            outline: none;
+            width: 60%;
+        }
+
+        input::placeholder { color: rgba(255,255,255,0.6); }
+
+        .btn-create {
+            background: var(--gold);
+            color: var(--deep-red);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-create:active { transform: scale(0.95); }
+
+        /* --- FOOTER & AUDIO --- */
+        .copyright {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.7rem;
+            opacity: 0.5;
+            z-index: 10;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 480px) {
+            h1 { font-size: 2.2rem; }
+            #main-card { width: 95%; padding: 20px; }
+            .mascot-container { width: 80px; height: 80px; }
+        }
+        
+        /* Utility for Happy New Year Mode */
+        .fireworks-text {
+            animation: flicker 1.5s infinite alternate;
+        }
+        
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 
+                    0 0 4px #fff,
+                    0 0 11px #fff,
+                    0 0 19px #fff,
+                    0 0 40px var(--gold),
+                    0 0 80px var(--gold),
+                    0 0 90px var(--gold),
+                    0 0 100px var(--gold),
+                    0 0 150px var(--gold);
+            }
+            20%, 24%, 55% {        
+                text-shadow: none;
+            }    
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LAYER 1: CANVAS EFFECTS -->
+    <canvas id="fireworks-canvas"></canvas>
+    
+    <!-- LAYER 2: OVERLAY (Interaction Trap) -->
+    <div id="welcome-overlay">
+        <div style="text-align:center;">
+            <div class="mascot-container" style="margin-bottom: 20px;">
+                <!-- SVG Horse Icon for Overlay -->
+                <svg viewBox="0 0 24 24" class="horse-svg" style="stroke: #fbbf24; width: 80px; height: 80px;">
+                     <path d="M21 5c-1.5 0-2.5 1-3.5 2C16.5 8 15.5 8 15 8c-1.5 0-2-1-3-2-.5-.5-1-1-2-1-1 0-2 1-2 2v2c0 2 2 4 4 4 1 0 2-1 3-2 1 1 2 2 4 2 1 0 2-1 2-2V7c0-1.5-.5-2-2-2zM5 14c-1.5 0-3 1.5-3 3s1.5 3 3 3 3-1.5 3-3-1.5-3-3-3zM18 13c-1.5 0-3 1.5-3 3s1.5 3 3 3 3-1.5 3-3-1.5-3-3-3z"/>
+                     <path d="M12 12c-2 0-3 2-3 4v4h6v-4c0-2-1-4-3-4z"/>
+                </svg>
+            </div>
+            <h2 style="color:white; margin-bottom:20px; font-family: var(--font-script);">Chào Xuân Bính Ngọ</h2>
+            <button class="btn-start" onclick="startExperience()">🧧 Mở Thiệp 🧧</button>
+        </div>
+    </div>
+
+    <!-- LAYER 3: MAIN CARD -->
+    <div id="main-card">
+        <!-- Linh vật Ngựa SVG (Minimalist) -->
+        <div class="mascot-container">
+            <svg viewBox="0 0 100 100" class="horse-svg">
+                <!-- Artisitc Horse Head Path -->
+                 <path d="M30,70 Q20,60 25,50 Q30,40 25,30 Q35,25 45,30 Q55,20 65,25 Q75,30 70,40 Q80,50 75,60 Q70,70 60,65 Q50,75 40,70 Z" fill="none" stroke="currentColor" stroke-width="2" />
+                 <path d="M60,35 Q65,30 70,35" fill="none" /> <!-- Eye -->
+                 <path d="M30,55 Q35,50 40,55" fill="none" /> <!-- Mouth -->
+                 <circle cx="50" cy="50" r="48" stroke-dasharray="10,5" stroke-opacity="0.5" />
+            </svg>
+        </div>
+
+        <h1 id="main-title">Bính Ngọ 2026</h1>
+        <p class="subtitle">Cung Chúc Tân Xuân - Vạn Sự Như Ý</p>
+
+        <!-- Dynamic Content: Countdown OR Happy New Year -->
+        <div id="dynamic-content">
+            <div id="countdown">
+                <div class="time-box"><span class="time-val" id="d">00</span><span class="time-label">Ngày</span></div>
+                <div class="time-box"><span class="time-val" id="h">00</span><span class="time-label">Giờ</span></div>
+                <div class="time-box"><span class="time-val" id="m">00</span><span class="time-label">Phút</span></div>
+                <div class="time-box"><span class="time-val" id="s">00</span><span class="time-label">Giây</span></div>
+            </div>
+        </div>
+
+        <div class="message-box" id="wish-display">
+            <!-- Wishes will be injected here via JS -->
+            Đang tải lời chúc...
+        </div>
+
+        <!-- Sender Logic -->
+        <div id="sender-section">
+            <p id="sender-display" style="display:none;">Người gửi: <span id="sender-name"></span></p>
+            
+            <div id="input-section" style="display:none;">
+                <p style="font-size: 0.8rem; margin-bottom:5px;">Nhập tên bạn để tạo thiệp gửi bạn bè:</p>
+                <div class="input-group">
+                    <input type="text" id="my-name" placeholder="Tên của bạn...">
+                    <button class="btn-create" onclick="generateLink()">Tạo Link</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="copyright">
+        Designed for Tet 2026
+    </div>
+
+    <!-- Audio Element (Hidden, Standard CDN) -->
+    <audio id="bg-music" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2023/01/24/audio_3473105749.mp3?filename=chinese-new-year-138406.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+    (function() { // Wrap in IIFE to prevent global scope pollution
+        /**
+         * SENIOR FRONTEND ENGINEER NOTES:
+         * 1. Performance: Sử dụng RequestAnimationFrame thay vì SetInterval cho Canvas render loop.
+         * 2. UX: Tách biệt Logic Countdown và Animation để tránh block main thread.
+         * 3. Accessibility: Đảm bảo độ tương phản màu sắc.
+         */
+
+        // --- CONFIGURATION ---
+        // Target Date: 00:00 Feb 17, 2026 (Giao thừa Bính Ngọ)
+        const TARGET_DATE = new Date('2026-02-17T00:00:00').getTime();
+        const IS_MOBILE = window.innerWidth < 768;
+        
+        // --- DATA STORE (ARRAY) ---
+        const wishes = [
+            "Năm mới Bính Ngọ, chúc bạn mã đáo thành công, tiền vào như nước, sức khỏe dồi dào!",
+            "Chúc mừng năm mới! Tấn tài tấn lộc, vạn sự như ý, gia đình an khang thịnh vượng.",
+            "Năm con Ngựa, chúc bạn sức khỏe dẻo dai, sự nghiệp thăng tiến, tình duyên phơi phới.",
+            "Xuân Bính Ngọ chúc nhau: Đủ tiền mua nhà - Đủ sức đi chơi - Đủ tình để yêu.",
+            "Chúc bạn 12 tháng phú quý, 365 ngày phát tài, 8760 giờ sung túc.",
+            "Năm mới chúc gia đình bạn: Một nụ cười cho lòng thêm ấm áp. Một ánh mắt cho hạnh phúc tràn đầy.",
+            "Sang năm mới Bính Ngọ, chúc bạn có sức mạnh của Ngựa chiến, vượt qua mọi khó khăn!",
+            "Chúc bạn: Đau đầu vì nhà giàu. Mệt mỏi vì học giỏi. Buồn phiền vì nhiều tiền!",
+            "Tết này vẫn giống Tết xưa. Vẫn đi xe máy, vẫn chưa có bồ... Đùa thôi, năm nay có bồ nhé!",
+            "Chúc mừng năm mới! Hay ăn chóng béo, tiền nhiều như kẹo, tình chặt như keo.",
+            "Năm mới chúc bạn thực hiện được những dự định còn dang dở, thành công rực rỡ.",
+            "Chúc Tết đến trăm điều như ý - Mừng xuân sang vạn sự thành công.",
+            "Giao thừa đã điểm, chúc bạn gạt bỏ muộn phiền năm cũ, đón chào niềm vui năm mới.",
+            "Năm mới bình an, tài lộc đầy nhà, con cháu sum vầy.",
+            "Chúc bạn luôn vui vẻ như chim sẻ, khỏe mạnh như đại bàng, giàu sang như chim phụng.",
+            "Cung chúc tân xuân, hồn nhiên như tiên, tiền nhiều như kẹo.",
+            "Xuân này hơn hẳn mấy xuân qua. Phúc lộc đưa nhau đến từng nhà.",
+            "Năm mới chúc bạn: Đa lộc, đa tài, đa phú quý. Đắc thời, đắc lợi, đắc nhân tâm.",
+            "Mừng 2026! Chúc bạn sự nghiệp thăng hoa, tiền tài rủng rỉnh.",
+            "Chúc bạn năm mới Bính Ngọ: Vạn sự khởi đầu nan, gian nan đừng có nản!"
+        ];
+
+        // --- STATE VARIABLES ---
+        let fireworksCanvas, ctx, canvasWidth, canvasHeight;
+        let particles = [];
+        let animationId;
+        let isNewYear = false;
+
+        // --- INIT FUNCTION ---
+        function init() {
+            // 1. Handle URL Params
+            handleURLParams();
+            
+            // 2. Setup Canvas
+            setupCanvas();
+            
+            // 3. Start Timer Logic
+            updateTimer();
+            setInterval(updateTimer, 1000);
+
+            // 4. Random Wish
+            rotateWish();
+            setInterval(rotateWish, 5000); // Change wish every 5s
+
+            // 5. Resize Listener
+            window.addEventListener('resize', () => {
+                if(fireworksCanvas) {
+                    canvasWidth = fireworksCanvas.width = window.innerWidth;
+                    canvasHeight = fireworksCanvas.height = window.innerHeight;
+                }
+            });
+        }
+
+        // --- USER INTERACTION TRIGGER ---
+        // Expose to window so HTML onclick works
+        window.startExperience = function() {
+            // UI Transition
+            const overlay = document.getElementById('welcome-overlay');
+            const card = document.getElementById('main-card');
+            
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                card.classList.add('show-card');
+            }, 800);
+
+            // Audio Play (Bypass Policy)
+            const audio = document.getElementById('bg-music');
+            if(audio) {
+                audio.volume = 0.5;
+                audio.play().catch(e => console.log("Audio requires interaction"));
+            }
+
+            // Start Visual Effects
+            loopAnimation();
+        }
+
+        // --- LOGIC: URL & SHARING ---
+        function handleURLParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const senderName = urlParams.get('ten');
+            
+            const senderDisplay = document.getElementById('sender-display');
+            const inputSection = document.getElementById('input-section');
+            const nameSpan = document.getElementById('sender-name');
+
+            if (senderName) {
+                // Scenario 1: Viewer (View Mode)
+                if(senderDisplay) senderDisplay.style.display = 'block';
+                // Decode URI Component handles Vietnamese characters correctly
+                if(nameSpan) nameSpan.innerText = decodeURIComponent(senderName);
+            } else {
+                // Scenario 2: Creator (Create Mode)
+                if(inputSection) inputSection.style.display = 'block';
+            }
+        }
+
+        // Expose to window
+        window.generateLink = function() {
+            const nameInput = document.getElementById('my-name');
+            const name = nameInput.value.trim();
+            
+            if (!name) {
+                alert("Bạn chưa nhập tên kìa!");
+                return;
+            }
+
+            // Smart Encoding for Vietnamese
+            const encodedName = encodeURIComponent(name);
+            const fullURL = `${window.location.origin}${window.location.pathname}?ten=${encodedName}`;
+            
+            // Clipboard API
+            if (navigator.clipboard && window.isSecureContext) {
+                 navigator.clipboard.writeText(fullURL).then(() => {
+                    alert("Đã copy link! Gửi ngay cho bạn bè nhé:\n" + fullURL);
+                }).catch(err => {
+                    console.error('Không copy được: ', err);
+                    prompt("Copy link dưới đây:", fullURL);
+                });
+            } else {
+                 prompt("Copy link dưới đây:", fullURL);
+            }
+        }
+
+        // --- LOGIC: COUNTDOWN & TIME ---
+        function updateTimer() {
+            const now = new Date().getTime();
+            const distance = TARGET_DATE - now;
+
+            if (distance < 0) {
+                // HAPPY NEW YEAR MODE
+                if (!isNewYear) {
+                    isNewYear = true;
+                    triggerNewYearMode();
+                }
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            const d = document.getElementById('d');
+            const h = document.getElementById('h');
+            const m = document.getElementById('m');
+            const s = document.getElementById('s');
+
+            if(d) d.innerText = days < 10 ? '0' + days : days;
+            if(h) h.innerText = hours < 10 ? '0' + hours : hours;
+            if(m) m.innerText = minutes < 10 ? '0' + minutes : minutes;
+            if(s) s.innerText = seconds < 10 ? '0' + seconds : seconds;
+        }
+
+        function triggerNewYearMode() {
+            const content = document.getElementById('dynamic-content');
+            if(content) {
+                content.innerHTML = '<h2 class="fireworks-text" style="font-size: 2.5rem; color: #fbbf24; font-family: var(--font-script);">CHÚC MỪNG NĂM MỚI</h2>';
+            }
+            const title = document.getElementById('main-title');
+            if(title) title.innerText = "Xuân Bính Ngọ";
+        }
+
+        function rotateWish() {
+            const display = document.getElementById('wish-display');
+            // Add fade effect logic here if needed, keeping it simple for single file
+            const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+            if(display) display.innerText = randomWish;
+        }
+
+        // --- CANVAS: FIREWORKS ENGINE (Optimized) ---
+        function setupCanvas() {
+            fireworksCanvas = document.getElementById('fireworks-canvas');
+            if(fireworksCanvas) {
+                ctx = fireworksCanvas.getContext('2d');
+                canvasWidth = fireworksCanvas.width = window.innerWidth;
+                canvasHeight = fireworksCanvas.height = window.innerHeight;
+            }
+        }
+
+        function random(min, max) { return Math.random() * (max - min) + min; }
+
+        class Particle {
+            constructor(x, y, hue) {
+                this.x = x;
+                this.y = y;
+                // Optimization: Mobile gets simpler physics
+                this.speed = IS_MOBILE ? random(2, 4) : random(2, 5);
+                this.angle = random(0, Math.PI * 2);
+                this.vx = Math.cos(this.angle) * this.speed;
+                this.vy = Math.sin(this.angle) * this.speed;
+                this.friction = 0.95; // Air resistance
+                this.gravity = 0.1; // Fall down
+                this.hue = hue;
+                this.brightness = random(50, 80);
+                this.alpha = 1;
+                this.decay = random(0.015, 0.03); // Fade speed
+            }
+
+            update() {
+                this.vx *= this.friction;
+                this.vy *= this.friction;
+                this.vy += this.gravity;
+                this.x += this.vx;
+                this.y += this.vy;
+                this.alpha -= this.decay;
+            }
+
+            draw() {
+                if(!ctx) return;
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = `hsla(${this.hue}, 100%, ${this.brightness}%, ${this.alpha})`;
+                // Optimization: Circle drawing is heavy, use Rect for mobile or simple particle
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function createFirework() {
+            if(!canvasWidth || !canvasHeight) return;
+            // Logic: Launch fireworks randomly
+            const x = random(canvasWidth * 0.1, canvasWidth * 0.9);
+            const y = random(canvasHeight * 0.1, canvasHeight * 0.5);
+            const hue = random(0, 360);
+            
+            // Optimization: Reduce particles on mobile to maintain 60FPS
+            const particleCount = IS_MOBILE ? 30 : 60; 
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle(x, y, hue));
+            }
+        }
+
+        function loopAnimation() {
+            animationId = requestAnimationFrame(loopAnimation);
+            
+            if(!ctx || !canvasWidth || !canvasHeight) return;
+
+            // "Trail" effect: instead of clearing rect, draw semi-transparent rect
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; // Control trail length
+            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+            // Probability to launch firework (higher = more frequent)
+            // If New Year: intense (0.05), if Countdown: waiting (0.01)
+            const chance = isNewYear ? 0.05 : 0.01;
+            if (Math.random() < chance) {
+                createFirework();
+            }
+
+            // Update particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].alpha <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+        }
+
+        // Start
+        window.addEventListener('load', init);
+    })();
+    </script>
+</body>
+</html>
