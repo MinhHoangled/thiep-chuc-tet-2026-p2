@@ -116,6 +116,8 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
             opacity: 0;
             transition: opacity 1s ease, transform 1s ease;
+            max-height: 90vh;
+            overflow-y: auto; /* Allow scroll on small mobile if content too long */
         }
 
         .show-card {
@@ -125,9 +127,9 @@
 
         /* --- SVG HORSE MASCOT --- */
         .mascot-container {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 15px;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 10px;
             filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.6));
         }
 
@@ -143,24 +145,33 @@
         /* --- TYPOGRAPHY --- */
         h1 {
             font-family: var(--font-script);
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: var(--gold);
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             line-height: 1.2;
         }
 
         .subtitle {
             font-family: var(--font-body);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             opacity: 0.9;
         }
 
+        .receiver-highlight {
+            font-family: var(--font-script);
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+            display: block;
+        }
+
         .message-box {
-            min-height: 100px;
+            min-height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -208,21 +219,25 @@
             margin-top: 10px;
         }
 
-        .input-group {
+        .input-container {
             display: flex;
+            flex-direction: column;
             gap: 10px;
             margin-top: 15px;
-            justify-content: center;
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 12px;
         }
 
         input {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.3);
             border-radius: 8px;
-            padding: 8px 12px;
+            padding: 10px 12px;
             color: #fff;
             outline: none;
-            width: 60%;
+            width: 100%;
+            font-family: var(--font-body);
         }
 
         input::placeholder { color: rgba(255,255,255,0.6); }
@@ -231,11 +246,14 @@
             background: var(--gold);
             color: var(--deep-red);
             border: none;
-            padding: 8px 15px;
+            padding: 12px;
             border-radius: 8px;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
             transition: transform 0.2s;
+            text-transform: uppercase;
+            width: 100%;
+            margin-top: 5px;
         }
 
         .btn-create:active { transform: scale(0.95); }
@@ -253,9 +271,10 @@
 
         /* --- RESPONSIVE --- */
         @media (max-width: 480px) {
-            h1 { font-size: 2.2rem; }
+            h1 { font-size: 2rem; }
+            .receiver-highlight { font-size: 1.5rem; }
             #main-card { width: 95%; padding: 20px; }
-            .mascot-container { width: 80px; height: 80px; }
+            .mascot-container { width: 60px; height: 60px; }
         }
         
         /* Utility for Happy New Year Mode */
@@ -317,6 +336,12 @@
         <h1 id="main-title">Bính Ngọ 2026</h1>
         <p class="subtitle">Cung Chúc Tân Xuân - Vạn Sự Như Ý</p>
 
+        <!-- New: Receiver Display -->
+        <div id="receiver-section" style="display:none;">
+            <span class="subtitle" style="text-transform: none; font-style: italic;">Thân gửi:</span>
+            <span id="receiver-name" class="receiver-highlight"></span>
+        </div>
+
         <!-- Dynamic Content: Countdown OR Happy New Year -->
         <div id="dynamic-content">
             <div id="countdown">
@@ -334,13 +359,16 @@
 
         <!-- Sender Logic -->
         <div id="sender-section">
-            <p id="sender-display" style="display:none;">Người gửi: <span id="sender-name"></span></p>
+            <p id="sender-display" style="display:none; font-family: var(--font-script); font-size: 1.4rem; color: var(--gold); margin-top: 10px;">
+                Người gửi: <span id="sender-name-display"></span>
+            </p>
             
             <div id="input-section" style="display:none;">
-                <p style="font-size: 0.8rem; margin-bottom:5px;">Nhập tên bạn để tạo thiệp gửi bạn bè:</p>
-                <div class="input-group">
-                    <input type="text" id="my-name" placeholder="Tên của bạn...">
-                    <button class="btn-create" onclick="generateLink()">Tạo Link</button>
+                <p style="font-size: 0.9rem; font-weight: bold; margin-bottom:5px; color: var(--gold);">🧧 Tạo thiệp chúc Tết:</p>
+                <div class="input-container">
+                    <input type="text" id="input-sender" placeholder="Tên bạn (Người gửi)">
+                    <input type="text" id="input-receiver" placeholder="Tên người nhận (Để trống nếu muốn chung chung)">
+                    <button class="btn-create" onclick="generateLink()">Tạo Link & Copy</button>
                 </div>
             </div>
         </div>
@@ -451,41 +479,71 @@
         // --- LOGIC: URL & SHARING ---
         function handleURLParams() {
             const urlParams = new URLSearchParams(window.location.search);
-            const senderName = urlParams.get('ten');
+            // Support 'from' (new standard) and fallback to 'ten' (legacy)
+            const senderParam = urlParams.get('from') || urlParams.get('ten');
+            const receiverParam = urlParams.get('to');
             
             const senderDisplay = document.getElementById('sender-display');
+            const senderNameSpan = document.getElementById('sender-name-display');
+            
+            const receiverSection = document.getElementById('receiver-section');
+            const receiverNameSpan = document.getElementById('receiver-name');
+            
             const inputSection = document.getElementById('input-section');
-            const nameSpan = document.getElementById('sender-name');
 
-            if (senderName) {
-                // Scenario 1: Viewer (View Mode)
+            let isViewMode = false;
+
+            // Handle Receiver (To)
+            if (receiverParam) {
+                if(receiverSection) receiverSection.style.display = 'block';
+                if(receiverNameSpan) receiverNameSpan.innerText = decodeURIComponent(receiverParam);
+                isViewMode = true;
+            }
+
+            // Handle Sender (From)
+            if (senderParam) {
                 if(senderDisplay) senderDisplay.style.display = 'block';
-                // Decode URI Component handles Vietnamese characters correctly
-                if(nameSpan) nameSpan.innerText = decodeURIComponent(senderName);
-            } else {
-                // Scenario 2: Creator (Create Mode)
+                if(senderNameSpan) senderNameSpan.innerText = decodeURIComponent(senderParam);
+                isViewMode = true;
+            }
+
+            // If we are in "View Mode" (viewing a card), hide the creator input.
+            // If we are "Fresh" (no params), show the creator input.
+            if (!isViewMode) {
                 if(inputSection) inputSection.style.display = 'block';
+            } else {
+                // Optional: You could show a small "Make your own" button even in view mode
+                // But for simplicity, we keep it clean.
             }
         }
 
         // Expose to window
         window.generateLink = function() {
-            const nameInput = document.getElementById('my-name');
-            const name = nameInput.value.trim();
+            const senderInput = document.getElementById('input-sender');
+            const receiverInput = document.getElementById('input-receiver');
             
-            if (!name) {
-                alert("Bạn chưa nhập tên kìa!");
+            const senderName = senderInput.value.trim();
+            const receiverName = receiverInput.value.trim();
+            
+            if (!senderName) {
+                alert("Bạn quên nhập tên người gửi (Tên bạn) rồi!");
+                senderInput.focus();
                 return;
             }
 
-            // Smart Encoding for Vietnamese
-            const encodedName = encodeURIComponent(name);
-            const fullURL = `${window.location.origin}${window.location.pathname}?ten=${encodedName}`;
+            // Construct Query String
+            let queryString = `?from=${encodeURIComponent(senderName)}`;
+            
+            if (receiverName) {
+                queryString += `&to=${encodeURIComponent(receiverName)}`;
+            }
+
+            const fullURL = `${window.location.origin}${window.location.pathname}${queryString}`;
             
             // Clipboard API
             if (navigator.clipboard && window.isSecureContext) {
                  navigator.clipboard.writeText(fullURL).then(() => {
-                    alert("Đã copy link! Gửi ngay cho bạn bè nhé:\n" + fullURL);
+                    alert("Đã tạo xong! Link đã được copy vào bộ nhớ tạm.\nGửi ngay cho bạn bè nhé!");
                 }).catch(err => {
                     console.error('Không copy được: ', err);
                     prompt("Copy link dưới đây:", fullURL);
